@@ -227,3 +227,117 @@ $ laplace u = -4 pi rho $
 $ "div" overline(E) = (diff E_1)/(diff x) + (diff E_2)/(diff y) + (diff E_3)/(diff z) $
 
 $ "rot" overline(E) = ((diff E_3)/(diff y) - (diff E_2)/(diff z)) overline(i) + ((diff E_1)/(diff z) - (diff E_3)/(diff x)) overline(j) + ((diff E_2)/(diff x) - (diff E_1)/(diff y))overline(k) $
+
+#align(right)[`2025-03-05`]
+
+что-то про уравнение пуассо [я не успел записать]
+
+= модели процессов переноса тепла и диффузии
+
+матмодель распространения тепла, учитывающую диффузионный (за счёт движения молекул) и конвективный (за счёт простого движения жидкости) механизм.
+
+"не хватит камня горячего, чтобы пельмени сварить".
+
+предоположим, что среда занимает область $D$ в нашем любимом пространстве $RR^3$, в котором мы живём, существуем и так далее. за $Omega$ обозначим огрниченную подобласть $D$. $overline(q)(overline(x), t)$ --- вектор потока тепла.
+
+#figure(image("image-2.png", width: 30%))
+
+физический смысл в том, что с его помощью можно определить количество $Q_1$ тепла, вносимое в область $Omega$ извне за время от $t_1$ до $t_2$.
+
+$ Q_1 = integral_(t_1)^(t_2) dif t integral_Gamma overline(q) dot overline(n) dif S wide (4.1) $
+
+#figure(image("image-3.png", width: 30%))
+
+
+нам в школе говорили, что мерой тепла является температура. но как связать вектор потока тепла $overline(q)$ с температурой? первым был фурье, он предложил вот такую формулу:
+
+$ overline(q) = -k gradient T wide (4.2) $
+
+$k$ --- коэффициент теплопроводности.
+
+#bbox[определение][
+  среда однородная, если её свойства не меняются в разных точках.
+]
+
+#bbox[определение][
+  среда изотропна в точке $x$, если её свойства одинаковы по всем направлениям, выходящим из $x$. в противном случае антизотропной.
+]
+
+$ Q_1 = integral_(t_1)^(t_2) dif t integral_Gamma gradient T dot overline(n) dif S $
+
+по формуле гаусса-остроградского:
+
+$ Q_1 = integral_(t_1)^(t_2) dif t integral_Omega op("div") k gradient T dif x wide(4.4) $
+
+предположим, что есть внутренние источники тепла с плотностью $F$:
+
+$ Q_2 = integral_(t_1)^(t_2) dif t integral_Omega F dif x wide (4.5a) $
+
+по закону сохранения тепла:
+
+$ Q = Q_1 + Q_2 $
+
+$Q_1$ за счёт диффузинного механизма, $Q_2$ --- от источника.
+
+тепло, которое необходимо для нагревания среды, занимающей $Omega$, имеющую температуру $T_1$ в момент времени $t_1$ до температуры $T_2$ в момент времени $t_2$:
+
+$ Q = integral_Omega rho c (T_2 (x) - T_1 (x)) dif x = integral_Omega rho c integral_(t_1)^(t_2) (diff T)/(diff t) dif t dif x =
+integral_(t_1)^(t_2) dif t integral_Omega rho c (diff T)/(diff t) dif x wide (4.5) $
+
+$ Q = Q_1 + Q_2 $
+
+$ integral_(t_1)^(t_2) dif t integral_Omega rho c (diff T)/(diff x) dif x = integral_(t_1)^(t_2) dif t integral_Omega (op("div") k gradient T + F) dif x wide(4.6) $
+
+отсюда в силу произвольности области $Omega$ мы получаем
+
+$ rho c diff(T) / diff(t) = op("div") (k gradient T) + F wide (4.7) $
+
+это и есть искомая математическая модель распространения тепла.
+
+#bbox[лемма][
+  пусть $psi in C(D) | integral_Omega psi(x) dif x = 0 space forall Omega subset D space => space psi = 0  $
+]
+
+модель мы вывели. в декартовой системе координат (дск) уравнение принимает вид:
+
+$ rho c (diff T)/(diff t) = (diff)/(diff x) (k (diff T)/(diff x)) + (diff)/(diff y) (k (diff T)/(diff y)) + (diff)/(diff z) (k (diff T)/(diff z)) + F wide (4.8) $
+
+если среда однородна, то:
+
+$ (diff T)/(diff t) = a^2 laplace T + f, quad a^2 = k / (rho c), quad f = F /(rho c) wide (4.9) $
+
+это уравнение теплопроводности.
+
+однородное уравнение теплопроводности $(F=0)$:
+
+$ (diff T)/(diff t) = a^2 laplace T wide (4.10) $
+
+\
+
+выведем теперь модель, учитывающую и конвективный механизм переноса тепла. введём скорость $overline(u)$ 
+$ -T overline(u) dot overline(n) dif S $
+количество жидкости, протекающее в единицу времени через площадку $dif S$. тогда количество тепла, переносимое вот этой вот жидкостью за время от $t_1$ до $t_2$:
+
+$ Q_3 = -integral_(t_1)^(t_2) dif t integral_Gamma T overline(u) dot overline(n) dif S $
+
+закон сохранения энергии:
+
+$ Q = Q_1 + Q_2 + Q_3 $
+
+теперь наш закон будет учитывать три (3) механизма.
+
+мы должны взять уравнение, которое уже вывели и добавить ещё слагаемое:
+
+$ rho c (diff T)/(diff t) = op("div") (k gradient T) - op("div")(T overline(u)) + F wide (4.19) $
+
+$ T = T_0 (overline(x)), space x in Omega $
+
+$ T = g "на" Gamma, "либо" (diff T)/(diff n) = g "на" Gamma $
+
+но! есть ещё один механизм, в котором используются те же самые законы. это распространение различного рода загрязняющих веществ.
+
+$ [C] = "кг"/"м"^3 $
+
+закон фика. похож на закон фурье.
+
+$ overline(J) = -eta gradient C $
