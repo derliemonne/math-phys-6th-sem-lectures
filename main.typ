@@ -341,3 +341,34 @@ $ [C] = "кг"/"м"^3 $
 закон фика. похож на закон фурье.
 
 $ overline(J) = -eta gradient C $
+
+= феноменологический подход к построению модели распространения жидкости
+
+#align(right)[`2025-03-12`]
+
+мы будем использовать феноменологический подход. это значит, что жидкость моделируется сплошной средой, при этом её основными характеристиками являются:
+$overline(u) = overline(u)(overline(x), t), space P = P(overline(x), t), space rho = rho(overline(x), t), "энтропия"$
+
+== общий закон сохранения (1.5.2)
+
+пусть жидкость занимает область $D subset RR^3$, а в $D$ находится ограниченная подобласть $Omega$ с границей $Gamma$.
+
+$psi(overline(x), t)$ --- скалярная гидродинамическая величина.
+
+$ Psi(t) = integral_Omega psi(x, t) dif x $
+
+этот интеграл --- количество величины $psi$ в области $Omega$. получается, $psi$ --- что-то типа плотности.
+
+обозначим через $q$ плотность величины $Psi(t)$. 
+в силу общего закона сохранения приращения величины $Psi$ в $Omega$ за время от $t$ до $t + Delta t$ происходит за счёт действия объёмных источников,
+изменяющих $psi$ на величину $integral_t^(t+Delta t) dif tau integral_Omega q dif x$.
+
+$ psi(x, t) overline(u) dot overline(n) dif S $
+
+$ integral_t^(t+Delta t) psi(x, t) overline(u) dot overline(n) dif S $
+
+в силу закона сохранения мы получаем:
+
+$ Psi(t + Delta t) - Psi(t) = integral_t^(t+Delta t) dif t integral_Omega q dif x + integral_t^(t+Delta t) dif t integral_Gamma psi(x, t) overline(u) dot overline(n) dif S $
+
+`в книге у препода написано лучше и понятнее, поэтому не вижу смысла продолжать свои конспекты`
